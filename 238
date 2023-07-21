@@ -1,0 +1,47 @@
+package main
+
+import (
+	"fmt"
+)
+
+func productExceptSelf(nums []int) []int {
+	// lproduct, rproduct, answer := make([]int, len(nums)), make([]int, len(nums)), make([]int, len(nums))
+	// for i := 0; i < len(nums)-1; i++ {
+	// 	if i == 0 {
+	// 		lproduct[0] = nums[0]
+	// 		rproduct[len(nums)-1] = nums[len(nums)-1]
+	// 	} else {
+	// 		lproduct[i] = nums[i] * lproduct[i-1]
+	// 		rproduct[len(nums)-1-i] = nums[len(nums)-1-i] * rproduct[len(nums)-i]
+	// 	}
+	// }
+	// for i := 0; i < len(nums); i++ {
+	// 	if i == 0 {
+	// 		answer[i] = rproduct[1]
+	// 	} else if i == len(nums)-1 {
+	// 		answer[i] = lproduct[i-1]
+	// 	} else {
+	// 		answer[i] = lproduct[i-1] * rproduct[i+1]
+	// 	}
+	// }
+	// return answer
+
+	var answer []int = make([]int, len(nums))
+	var size int = len(nums)
+	answer[0] = 1
+	for i := 1; i < size; i++ {
+		answer[i] = answer[i-1] * nums[i-1]
+	}
+	flag := 1
+	for i := size - 1; i >= 0; i-- {
+		answer[i] = answer[i] * flag
+		flag *= nums[i]
+	}
+	return answer
+}
+
+func main() {
+	var nums []int = []int{1, 2, 3, 4}
+
+	fmt.Println(productExceptSelf(nums))
+}
