@@ -42,6 +42,5 @@ func productExceptSelf(nums []int) []int {
 
 func main() {
 	var nums []int = []int{1, 2, 3, 4}
-
 	fmt.Println(productExceptSelf(nums))
 }
