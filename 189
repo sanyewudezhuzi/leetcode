@@ -1,0 +1,30 @@
+package main
+
+import (
+	"fmt"
+)
+
+func rotate(nums []int, k int) {
+	var move int = k % len(nums)
+	var slice []int = make([]int, move)
+	j := 0
+	for i := len(nums) - move; i < len(nums); i++ {
+		slice[j] = nums[i]
+		j++
+	}
+	j = len(nums) - 1
+	for i := len(nums) - 1 - move; i >= 0; i-- {
+		nums[j] = nums[i]
+		j--
+	}
+	for i := 0; i < move; i++ {
+		nums[i] = slice[i]
+	}
+}
+
+func main() {
+	var nums []int = []int{1, 2, 3, 4}
+	var k int = 3
+	rotate(nums, k)
+	fmt.Println(nums)
+}
