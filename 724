@@ -1,0 +1,26 @@
+package main
+
+import (
+	"fmt"
+)
+
+func pivotIndex(nums []int) int {
+	var total int = 0
+	for _, v := range nums {
+		total += v
+	}
+	var lsum int = 0
+	// lsum = rsum => lsum = total - lsum - nums[i] => 2 * lsum = total - sum[i]
+	for i := 0; i < len(nums); i++ {
+		if 2*lsum == total-nums[i] {
+			return i
+		}
+		lsum += nums[i]
+	}
+	return -1
+}
+
+func main() {
+	var nums []int = []int{1, 2, 3, 4}
+	fmt.Println(pivotIndex(nums))
+}
