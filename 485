@@ -1,0 +1,29 @@
+package main
+
+import (
+	"fmt"
+)
+
+func findMaxConsecutiveOnes(nums []int) int {
+	var rs int = 0
+	temp := 0
+	for _, v := range nums {
+		if v == 1 {
+			temp++
+		} else {
+			if temp > rs {
+				rs = temp
+			}
+			temp = 0
+		}
+	}
+	if temp > rs {
+		rs = temp
+	}
+	return rs
+}
+
+func main() {
+	var nums []int = []int{1, 2, 3, 4}
+	fmt.Println(findMaxConsecutiveOnes(nums))
+}
