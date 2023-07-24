@@ -1,0 +1,62 @@
+package main
+
+import (
+	"fmt"
+)
+
+func lemonadeChange(bills []int) bool {
+	// var money map[int]int = map[int]int{5: 0, 10: 0, 20: 0}
+	// for _, v := range bills {
+	// 	if v == 5 {
+	// 		money[5]++
+	// 	} else if v == 10 {
+	// 		if money[5] > 0 {
+	// 			money[10]++
+	// 			money[5]--
+	// 		} else {
+	// 			return false
+	// 		}
+	// 	} else if v == 20 {
+	// 		if money[10] > 0 && money[5] > 0 {
+	// 			money[20]++
+	// 			money[5]--
+	// 			money[10]--
+	// 		} else if money[5] >= 3 {
+	// 			money[20]++
+	// 			money[5] -= 3
+	// 		} else {
+	// 			return false
+	// 		}
+	// 	}
+	// }
+	// return true
+
+	five, ten := 0, 0
+	for _, v := range bills {
+		if v == 5 {
+			five++
+		} else if v == 10 {
+			if five > 0 {
+				five--
+				ten++
+			} else {
+				return false
+			}
+		} else if v == 20 {
+			if ten > 0 && five > 0 {
+				ten--
+				five--
+			} else if five >= 3 {
+				five -= 3
+			} else {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+func main() {
+	bills := []int{5, 5, 5, 10, 20}
+	fmt.Println(lemonadeChange(bills))
+}
