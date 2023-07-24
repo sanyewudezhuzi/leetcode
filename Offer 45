@@ -1,0 +1,65 @@
+package main
+
+import (
+	"fmt"
+	"strconv"
+)
+
+func minNumber(nums []int) string {
+	// https://leetcode.cn/problems/ba-shu-zu-pai-cheng-zui-xiao-de-shu-lcof/solutions/1277335/kuai-pai-shi-xian-pai-xu-xian-pai-xu-hou-4sil/
+	// []int => []string
+	mark := make([]string, len(nums))
+	for k, v := range nums {
+		mark[k] = strconv.Itoa(v)
+	}
+	fmt.Println(mark)
+	quicklySort(mark, 0, len(nums)-1)
+	rs := ""
+	for _, v := range mark {
+		rs += v
+	}
+	return rs
+}
+
+// s1是否大于s2
+func compare(s1, s2 string) bool {
+	a := s1 + s2
+	b := s2 + s1
+	for i := 0; i < len(a); i++ {
+		if a[i] == b[i] {
+			continue
+		}
+		if a[i] > b[i] {
+			return true
+		}
+		return false
+	}
+	return true
+}
+
+// 快速排序
+func quicklySort(arr []string, start, end int) {
+	if start < end {
+		base := arr[start]
+		l, r := start, end
+		for l < r {
+			for l < r && compare(arr[r], base) { // arr[r] >= base
+				r--
+			}
+			arr[l] = arr[r]
+			for l < r && compare(base, arr[l]) { // arr[l] <= base
+				l++
+			}
+			arr[r] = arr[l]
+		}
+		arr[l] = base
+		quicklySort(arr, start, l-1)
+		quicklySort(arr, l+1, end)
+	}
+}
+
+func main() {
+	nums := []int{0, 1, 0, 3, 12}
+
+	fmt.Println(minNumber(nums))
+}
