@@ -1,0 +1,57 @@
+package main
+
+import (
+	"fmt"
+)
+
+func maxAbsoluteSum(nums []int) int {
+	var dpMax = nums[0]
+	var dpMin = nums[0]
+	var res = dpMax
+	for i := 1; i < len(nums); i++ {
+		dpMax = getMaxNum(dpMax+nums[i], nums[i])
+		dpMin = getMinNum(dpMin+nums[i], nums[i])
+		res = getRes(dpMax, abs(dpMin), res)
+	}
+	return abs(res)
+}
+
+func getMaxNum(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func getMinNum(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func getRes(a, b, c int) int {
+	if a > b {
+		if a > c {
+			return a
+		}
+		return c
+	} else {
+		if b > c {
+			return b
+		}
+		return c
+	}
+}
+
+func abs(a int) int {
+	if a > 0 {
+		return a
+	}
+	return -a
+}
+
+func main() {
+	grid := []int{2, -5, 1, -4, 3, -2}
+	fmt.Println(maxAbsoluteSum(grid))
+}
