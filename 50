@@ -1,0 +1,42 @@
+package main
+
+import (
+	"fmt"
+)
+
+func myPow(x float64, n int) float64 {
+	if n > 0 {
+		return pow(x, n)
+	}
+	return 1.0 / pow(x, -n)
+}
+
+/* // 快速幂算法 递归版本
+func pow(x float64, n int) float64 {
+	if n == 0 {
+		return 1
+	}
+	y := pow(x, n/2)
+	if n%2 == 0 {
+		return y * y
+	}
+	return y * y * x
+} */
+
+// 快速幂算法 迭代版本
+func pow(x float64, n int) float64 {
+	res, product := 1.0, x
+	for n > 0 {
+		if n%2 == 1 {
+			res *= product
+		}
+		product *= product
+		n /= 2
+	}
+	return res
+}
+
+func main() {
+	x, n := 3.00000, 9
+	fmt.Println(myPow(x, n))
+}
