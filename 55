@@ -1,0 +1,40 @@
+package main
+
+import (
+	"fmt"
+)
+
+// 最早开始位置
+func canJump(nums []int) bool {
+	to := 0
+	for i := 0; i < len(nums); i++ {
+		if to < i {
+			return false
+		}
+		to = max(to, nums[i]+i)
+	}
+	return true
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+// 可以到达最远距离
+// func canJump(nums []int) bool {
+// 	end := len(nums) - 1
+// 	for i := len(nums) - 2; i >= 0; i-- {
+// 		if i+nums[i] >= end {
+// 			end = i
+// 		}
+// 	}
+// 	return end == 0
+// }
+
+func main() {
+	grid := []int{2, 3, 1, 1, 4, 0, 0, 2, 1, 1}
+	fmt.Println(canJump(grid))
+}
