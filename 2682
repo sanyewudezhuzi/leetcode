@@ -1,0 +1,38 @@
+package main
+
+import (
+	"fmt"
+	"sort"
+)
+
+func circularGameLosers(n int, k int) []int {
+	mark := make([]bool, n)
+	count := 1
+	i := 0
+	mark[i] = true
+	for mark[i] {
+		i += k * count
+		i %= n
+		count++
+		if mark[i] {
+			break
+		}
+		mark[i] = true
+	}
+	ans := make([]int, n-count+1)
+	i = 0
+	for k, v := range mark {
+		if !v {
+			ans[i] = k + 1
+			i++
+		}
+	}
+	sort.Ints(ans)
+	return ans
+}
+
+func main() {
+	n := 5
+	k := 2
+	fmt.Println(circularGameLosers(n, k))
+}
