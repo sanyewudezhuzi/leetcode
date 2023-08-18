@@ -1,0 +1,20 @@
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func removeElements(head *ListNode, val int) *ListNode {
+	var link *ListNode = &ListNode{}
+	link.Next = head
+	temp := link
+	for temp.Next != nil {
+		if temp.Next.Val != val {
+			temp = temp.Next
+		} else {
+			temp.Next = temp.Next.Next
+		}
+	}
+	return link.Next
+}
