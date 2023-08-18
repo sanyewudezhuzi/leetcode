@@ -1,0 +1,95 @@
+package main
+
+import "fmt"
+
+type MyLinkedList struct {
+	size int
+	head *ListNode
+}
+
+func Constructor() MyLinkedList {
+	return MyLinkedList{0, &ListNode{}}
+}
+
+func (this *MyLinkedList) Get(index int) int {
+	if this == nil || index < 0 || index >= this.size {
+		return -1
+	}
+	temp := this.head
+	for i := 0; i < index; i++ {
+		temp = temp.Next
+	}
+	return temp.Next.Val
+}
+
+func (this *MyLinkedList) AddAtHead(val int) {
+	var link = &ListNode{val, this.head.Next}
+	this.head.Next = link
+	this.size++
+}
+
+func (this *MyLinkedList) AddAtTail(val int) {
+	temp := this.head
+	for temp.Next != nil {
+		temp = temp.Next
+	}
+	temp.Next = &ListNode{Val: val}
+	this.size++
+}
+
+func (this *MyLinkedList) AddAtIndex(index int, val int) {
+	if index < 0 || index > this.size {
+		return
+	}
+	var link = &ListNode{Val: val}
+	front := this.head
+	for i := 0; i < index; i++ {
+		front = front.Next
+	}
+	temp := front.Next
+	front.Next = link
+	link.Next = temp
+	this.size++
+}
+
+func (this *MyLinkedList) DeleteAtIndex(index int) {
+	if index < 0 || index >= this.size {
+		return
+	}
+	front := this.head
+	for i := 0; i < index; i++ {
+		front = front.Next
+	}
+	front.Next = front.Next.Next
+	this.size--
+}
+
+func (list *MyLinkedList) printLinkedList() {
+	cur := list.head      // 设置当前节点为虚拟头节点
+	for cur.Next != nil { // 遍历链表
+		fmt.Println(cur.Next.Val) // 打印节点值
+		cur = cur.Next            // 切换到下一个节点
+	}
+}
+
+func main() {
+	list := Constructor()     // 初始化链表
+	list.AddAtHead(100)       // 在头部添加元素
+	list.AddAtTail(242)       // 在尾部添加元素
+	list.AddAtTail(777)       // 在尾部添加元素
+	list.AddAtIndex(1, 99999) // 在指定位置添加元素
+	list.AddAtIndex(4, 11111) // 在指定位置添加元素
+	list.DeleteAtIndex(2)
+	list.printLinkedList() // 打印链表
+}
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
