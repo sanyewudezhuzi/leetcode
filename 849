@@ -1,0 +1,23 @@
+func maxDistToClosest(seats []int) int {
+  ans := 0
+	i, j := 0, 0
+	for ; j < len(seats); j++ {
+		if seats[i] == 1 && seats[j] == 1 {
+			ans = max(ans, (j-i)>>1)
+			i = j
+		} else if i == 0 && seats[i] == 0 && seats[j] == 1 {
+			ans = max(ans, j)
+			i = j
+		} else if j == len(seats)-1 && seats[i] == 1 && seats[j] == 0 {
+			ans = max(ans, j-i)
+		}
+	}
+	return ans
+}
+
+func max(a, b int) int {
+	if a < b {
+		return b
+	}
+	return a
+}
