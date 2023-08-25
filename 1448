@@ -1,0 +1,25 @@
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func goodNodes(root *TreeNode) int {
+	return get(root, root.Val)
+}
+
+func get(root *TreeNode, max int) int {
+	count := 0
+	if root == nil {
+		return 0
+	}
+	if root.Val >= max {
+		count++
+		max = root.Val
+	}
+	count += get(root.Left, max)
+	count += get(root.Right, max)
+	return count
+}
