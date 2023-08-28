@@ -1,3 +1,4 @@
+// 单链表的实现
 package main
 
 import "fmt"
@@ -92,4 +93,143 @@ type TreeNode struct {
 	Val   int
 	Left  *TreeNode
 	Right *TreeNode
+}
+
+// 双链表的实现
+package main
+
+import "fmt"
+
+type MyLinkedList struct {
+	first *MyListNode
+	last  *MyListNode
+	size  int
+}
+
+func Constructor() MyLinkedList {
+	var first *MyListNode = &MyListNode{}
+	var last *MyListNode = &MyListNode{}
+	first.Next = last
+	last.Prev = first
+	var linkedList *MyLinkedList = &MyLinkedList{first, last, 0}
+	return *linkedList
+}
+
+func (this *MyLinkedList) Get(index int) int {
+	if index >= this.size || index < 0 {
+		return -1
+	}
+	var temp *MyListNode
+	if index+1 < this.size-index {
+		// 从前往后
+		temp = this.first
+		for i := 0; i <= index; i++ {
+			temp = temp.Next
+		}
+	} else {
+		// 从后往前
+		temp = this.last
+		for i := 0; i < this.size-index; i++ {
+			temp = temp.Prev
+		}
+	}
+	return temp.Val
+}
+
+func (this *MyLinkedList) AddAtHead(val int) {
+	this.AddAtIndex(0, val)
+}
+
+func (this *MyLinkedList) AddAtTail(val int) {
+	this.AddAtIndex(this.size, val)
+}
+
+func (this *MyLinkedList) AddAtIndex(index int, val int) {
+	if index > this.size {
+		return
+	}
+	if index < 0 {
+		index = 0
+	}
+	var l, r *MyListNode
+	if index < this.size-index {
+		// 从前往后
+		l = this.first
+		for i := 0; i < index; i++ {
+			l = l.Next
+		}
+		r = l.Next
+	} else {
+		// 从后往前
+		r = this.last
+		for i := 0; i < this.size-index; i++ {
+			r = r.Prev
+		}
+		l = r.Prev
+	}
+	var node *MyListNode = &MyListNode{val, r, l}
+	l.Next = node
+	r.Prev = node
+	this.size++
+}
+
+func (this *MyLinkedList) DeleteAtIndex(index int) {
+	if index >= this.size || index < 0 {
+		return
+	}
+	var l, r *MyListNode
+	if index < this.size-index {
+		// 从前往后
+		l = this.first
+		for i := 0; i < index; i++ {
+			l = l.Next
+		}
+		r = l.Next.Next
+	} else {
+		// 从后往前
+		r = this.last
+		for i := 0; i < this.size-index-1; i++ {
+			r = r.Prev
+		}
+		l = r.Prev.Prev
+	}
+	l.Next = r
+	r.Prev = l
+	this.size--
+}
+
+func (this *MyLinkedList) print() {
+	temp := this.first
+	for i := 0; i < this.size; i++ {
+		fmt.Print(temp.Next.Val, " ")
+		temp = temp.Next
+	}
+	fmt.Println()
+}
+
+/**
+ * Your MyLinkedList object will be instantiated and called as such:
+ * obj := Constructor();
+ * param_1 := obj.Get(index);
+ * obj.AddAtHead(val);
+ * obj.AddAtTail(val);
+ * obj.AddAtIndex(index,val);
+ * obj.DeleteAtIndex(index);
+ */
+
+func main() {
+	a := Constructor() // 1 2 3
+	a.AddAtHead(1)
+	a.AddAtTail(3)
+	a.AddAtIndex(1, 2)
+	// a.print()
+	fmt.Println(a.Get(1))
+	a.DeleteAtIndex(1)
+	fmt.Println(a.Get(1))
+}
+
+type MyListNode struct {
+	Val  int
+	Next *MyListNode
+	Prev *MyListNode
 }
