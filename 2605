@@ -1,0 +1,51 @@
+package main
+
+import "fmt"
+
+func minNumber(nums1 []int, nums2 []int) int {
+	mark := make(map[int]bool, min(len(nums1), len(nums2)))
+	ans := 99
+	temp1 := 10
+	temp2 := 10
+	if len(nums1) < len(nums2) {
+		for _, v := range nums1 {
+			temp1 = min(temp1, v)
+			mark[v] = true
+		}
+		for _, v := range nums2 {
+			temp2 = min(temp2, v)
+			if mark[v] {
+				ans = min(v, ans)
+			}
+		}
+	} else {
+		for _, v := range nums2 {
+			temp1 = min(temp1, v)
+			mark[v] = true
+		}
+		for _, v := range nums1 {
+			temp2 = min(temp2, v)
+			if mark[v] {
+				ans = min(v, ans)
+			}
+		}
+	}
+	if temp1 > temp2 {
+		return min(temp2*10+temp1, ans)
+	}
+	return min(temp1*10+temp2, ans)
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func main() {
+	nums1 := []int{6, 4, 3, 7, 2, 1, 8, 5}
+	nums2 := []int{6, 8, 5, 3, 1, 7, 4, 2}
+
+	fmt.Println(minNumber(nums1, nums2))
+}
